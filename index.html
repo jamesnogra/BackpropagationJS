@@ -1,0 +1,34 @@
+<script>
+	
+	/*//input
+	let x = [
+		[0, 0],
+		[1, 0],
+		[0, 1],
+		[1, 1],
+	];
+	//output
+	let y = [
+		[0],
+		[0],
+		[0],
+		[1],
+	];*/
+
+	let x = 1.5;
+	let y = 0.5;
+	let weight = 0.8;
+	let learning_weight = 0.01
+	let output, mse_cost, delta;
+	let epochs = 100;
+
+	for (let n=0; n<epochs; n++) {
+		output = x * weight;
+		mse_cost = Math.pow((output - y), 2);
+		delta = x * (2 * ((x * weight) - y));
+		weight = weight - learning_weight * delta;
+		console.log("MSE: " + mse_cost);
+	}
+
+
+</script>

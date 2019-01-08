@@ -1,0 +1,33 @@
+<script>
+
+	let x_input = 1.5;
+	let y1, y2, y3, y_output = 2.5;
+	let w1 = 0.9, w2 = 0.1, w3 = 0.4;
+	let b1 = 0.1, b2 = 0.1, b3 = 0.1;
+	let learning_weight = 0.01
+	let output, mse_cost, delta1, delta2, delta3;
+	let epochs = 50;
+
+	for (let n=0; n<epochs; n++) {
+		y1 = x_input * w1 + b1;
+		y2 = y1 * w2 + b2;
+		y3 = y2 * w3 + b3;
+		mse_cost = Math.pow((y_output - y3), 2);
+
+		delta1 = x_input * w2 * w3 * 2 * (y3 - y_output);
+		delta2 = y2 * w3 * 2 * (y3 - y_output);
+		delta3 = y3 * 2 * (y3 - y_output);
+		w1 = w1 - learning_weight * delta1;
+		w2 = w2 - learning_weight * delta2;
+		w3 = w3 - learning_weight * delta3;
+		b1 = b1 - learning_weight * delta1;
+		b2 = b2 - learning_weight * delta2;
+		b3 = b3 - learning_weight * delta3;
+
+		if (n%5 == 0) {
+			console.log("w1: " + w1.toFixed(8) + "\t\tw2: " + w2.toFixed(8)+ "\t\tw3: " + w3.toFixed(8) + "\t\tMSE: " + mse_cost.toFixed(8));
+		}
+	}
+
+
+</script>

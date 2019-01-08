@@ -1,0 +1,39 @@
+<script>
+
+	let mse_cost, learning_rate = 0.01, delta1, delta2;
+	
+	let x = [1, 1];
+	let y_output = [1];
+
+	let wi = []
+	wi[0] = [0.4, 0.7, 0.1];
+	wi[1] = [0.4, 0.7, 0.1];
+	let bh = [0.1, 0.2, 0.3];
+	let wo = [];
+	wo[0] = [0.4];
+	wo[1] = [0.2];
+	wo[2] = [0.1];
+	let bo = [0.9];
+	let yh = [0, 0, 0];
+	let yo = [0];
+
+	let epochs = 25;
+
+	for (let n=0; n<epochs; n++) {
+		yh[0] = x[0] * wi[0][0] + x[1] * wi[1][0] + bh[0];
+		yh[1] = x[0] * wi[0][1] + x[1] * wi[1][1] + bh[1];
+		yh[2] = x[0] * wi[0][2] + x[1] * wi[1][2] + bh[2];
+		yo[0] = yh[0] * wo[0] + yh[1] * wo[1] + yh[2] * wo[2] + bo[0];
+
+		mse_cost = Math.pow((y_output - yo[0]), 2);
+
+		//update output weights
+		delta2 = yo[0] * 2 * (yo[0] - y_output);
+		wo[0] = wo[0] - learning_rate * delta2;
+		wo[1] = wo[1] - learning_rate * delta2;
+		wo[2] = wo[2] - learning_rate * delta2;
+
+		console.log("MSE: " + mse_cost);
+	}
+
+</script>
