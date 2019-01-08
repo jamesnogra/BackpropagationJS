@@ -1,0 +1,53 @@
+<script>
+
+	let mse_cost, learning_rate = 0.1;
+	
+	let x = [];
+	x[0] = [0, 0];
+	x[1] = [0, 1];
+	x[2] = [1, 0];
+	x[3] = [1, 1];
+	let y_output = [];
+	y_output[0] = [0];
+	y_output[1] = [0];
+	y_output[2] = [0];
+	y_output[3] = [1];
+	let temp_x, temp_y;
+
+	let wi = [0.9, 0.9]
+	let bi = [0.1];
+	let yo;
+	let delta;
+
+	let epochs = 10000;
+
+	for (let n=0; n<epochs; n++) {
+	
+		mse_cost = 0; //reset MSE every epoch
+		
+		for (let m=0; m<x.length; m++) {
+			temp_x = x[m];
+			temp_y = y_output[m];
+			
+			yo = sigmoid(temp_x[0] * wi[0] + temp_x[1] * wi[1] + bi[0]);
+			
+			delta = temp_y[0] - yo;
+			if (delta != 0) {
+				wi[0] = wi[0] + learning_rate * delta * temp_x[0];
+				wi[1] = wi[1] + learning_rate * delta * temp_x[1];
+				bi[0] = bi[0] + learning_rate * delta;
+			}
+			
+			mse_cost += Math.pow((temp_y[0] - yo), 2);
+		}
+	
+		if (n%100 == 0) {
+			console.log("MSE: " + mse_cost.toFixed(8));
+		}
+	}
+	
+	function sigmoid(x) {
+		return 1 / (1+Math.pow(Math.E, (-1*x)));
+	}
+
+</script>

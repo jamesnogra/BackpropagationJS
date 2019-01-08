@@ -1,0 +1,62 @@
+<script>
+
+	let mse_cost, learning_rate = 0.01, delta1, delta2;
+	
+	let x = [];
+	x[0] = [0, 0];
+	x[1] = [0, 1];
+	//x[2] = [1, 0];
+	//x[3] = [1, 1];
+	let y_output = [];
+	y_output[0] = [0];
+	y_output[1] = [1];
+	//y_output[2] = [1];
+	//y_output[3] = [1];
+	let temp_x, temp_y;
+
+	let wi = []
+	wi[0] = [0.4, 0.7, 0.1];
+	wi[1] = [0.4, 0.7, 0.1];
+	let bh = [0.1, 0.2, 0.3];
+	let wo = [];
+	wo[0] = [0.4];
+	wo[1] = [0.2];
+	wo[2] = [0.1];
+	let bo = [0.9];
+	let yh = [0, 0, 0];
+	let yo = [0];
+
+	let epochs = 50;
+
+	for (let n=0; n<epochs; n++) {
+	
+		mse_cost = 0; //reset MSE every epoch
+		
+		for (let m=0; m<x.length; m++) {
+			temp_x = x[m];
+			temp_y = y_output[m];
+			
+			yh[0] = temp_x[0] * wi[0][0] + temp_x[1] * wi[1][0] + bh[0];
+			yh[1] = temp_x[0] * wi[0][1] + temp_x[1] * wi[1][1] + bh[1];
+			yh[2] = temp_x[0] * wi[0][2] + temp_x[1] * wi[1][2] + bh[2];
+			yo[0] = yh[0] * wo[0] + yh[1] * wo[1] + yh[2] * wo[2] + bo[0];
+
+			mse_cost += Math.pow((yo[0] - temp_y[0]), 2);
+
+			//update output weights
+			if (n%5 == 0) {
+			console.log("x0: " + temp_x[0] + "\t\tx1: " + temp_x[1] + "\t\ty_real: " + temp_y[0] + "\t\ty_calc: " + yo[0]);
+				//console.log("YO: " + yo[0].toFixed(8) + "\t\tY: " + temp_y[0]);
+			}
+			delta2 = yo[0] * 2 * (yo[0] - temp_y[0]);
+			wo[0] = wo[0] - learning_rate * delta2;
+			wo[1] = wo[1] - learning_rate * delta2;
+			wo[2] = wo[2] - learning_rate * delta2;
+		}
+	
+		if (n%5 == 0) {
+			console.log("MSE: " + mse_cost.toFixed(8));
+		}
+	}
+
+</script>
